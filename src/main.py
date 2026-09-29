@@ -1,22 +1,35 @@
 from guerreiro import Guerreiro
 from inimigo import Inimigo
+from orc import Orc
+from dragao import Dragao
+from item import PocaoDeVida
 from batalha import Batalha
 
 
 def main():
 
     jogador = Guerreiro("Arthur")
+    # Para jogar com outra classe:
+    #   from mago import Mago;         jogador = Mago("Merlin")
+    #   from arqueiro import Arqueiro; jogador = Arqueiro("Robin")
 
-    inimigo = Inimigo(
-        nome="Goblin",
-        vida=100,
-        ataque=15,
-        defesa=5
-    )
+    for _ in range(3):
+        jogador.adicionar_item(PocaoDeVida())
 
-    batalha = Batalha(jogador, inimigo)
+    inimigos = [
+        Inimigo(nome="Goblin", vida=100, ataque=15, defesa=5),
+        Orc(),
+        Dragao(),  # chefe final
+    ]
 
-    batalha.iniciar()
+    for inimigo in inimigos:
+        resultado = Batalha(jogador, inimigo).iniciar()
+
+        if resultado != "vitoria":
+            print("Fim de jogo.")
+            return
+
+    print("\nParabéns! Você derrotou o chefe final e salvou o reino!")
 
 
 if __name__ == "__main__":

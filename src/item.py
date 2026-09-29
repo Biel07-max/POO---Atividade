@@ -5,5 +5,19 @@ class Item:
         self.valor = valor
 
     def usar(self, personagem):
-        # TODO: implementar efeito do item
-        pass
+        raise NotImplementedError("Cada item deve implementar seu próprio efeito.")
+
+
+class PocaoDeVida(Item):
+
+    def __init__(self, cura=40):
+        super().__init__(nome="Poção de Vida", valor=50)
+        self.cura = cura
+
+    def usar(self, personagem):
+        curado = personagem.curar(self.cura)
+        print(
+            f"{personagem.nome} usou {self.nome} e recuperou {curado} de vida! "
+            f"(Vida: {personagem.vida})"
+        )
+        return curado
